@@ -22,9 +22,9 @@ function barChart(){
             .style("padding", "8px")
             .style("background-color","#626D71")
             .style("border-radius", "6px")
-            .style("text-align", "center")
+            .style("text-align", "left")
             .style("font-family", "monospace")
-            .style("width", "400px")
+            .style("width", "150px")
             .text("");
 
         var barwidth = width - margin.left - margin.right
@@ -60,6 +60,20 @@ function barChart(){
             .style("fill", function(d, i){ return colors(i);})
             .style("stroke", "#31708f")
             .style("stroke-width", "1")
+            .on("mouseover", function(d){
+                tooltip.html("This is tooltip text for data."+"<br>"
+                + "The datapoint is: " + d);
+                return tooltip.style("visibility", "visible");
+            })
+            .on("mousemove", function() {
+                return tooltip.style("top",
+                                (d3.event.pageY - 10) + "px")
+                            .style("left",
+                                (d3.event.pageX + 10) + "px");
+            })
+            .on("mouseout", function(d){
+                return tooltip.style("visibility", "hidden");
+            })
 
         bar.transition()
         .attr("height", function(d){
@@ -75,7 +89,7 @@ function barChart(){
         .ease(d3.easeElastic)
 
         var xAxis = d3.axisBottom(xScale)
-                .ticks(data.size)
+            .ticks(data.size)
         d3.select("svg").append("g")
             .attr("id","xAxisG")
             .call(xAxis)
@@ -86,7 +100,7 @@ function barChart(){
             .domain([0, d3.max(data)])
             .range([barheight, 0])
         var yAxis = d3.axisLeft(yAxisScale)
-                .ticks(10)
+            .ticks(10)
         d3.select("svg").append("g")
             .attr("id","yAxisG")
             .call(yAxis)
