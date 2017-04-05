@@ -1,8 +1,8 @@
-function barChart() {
+function barChart(){
     var width = 400,
         height = 600
 
-    function chart(selections) {
+    function chart(selection) {
         var data = selection.enter().data();
         var div = selection,
             svg = div.selectAll('svg');
@@ -20,6 +20,28 @@ function barChart() {
             .style("font-family", "monospace")
             .style("width", "400px")
             .text("");
+
+        var xScale = d3.scaleBand()
+            .domain(d3.range(data.length))
+            .range([0,width]);
+
+        var yScale = d3.scaleLinear()
+            .domain([0, d3.max(data)])
+            .range([0, height])
+
+        var bar = svg.selectAll("rect")
+            .data(data)
+            .enter()
+            .append("rect")
+            .attr("x", function(d, i){
+                return xScale(i);
+            })
+            .attr("y", function(d){
+                return height - yScale(d);
+            })
+            .attr("width", xScale.bandwidth())
+            .attr("height", function(d){ return yScale(d)})
+            .attr("fill",function(d){return "rgb(0,0,"+ d*10 +")"})
     }
 
     chart.width = function(value) {
@@ -37,6 +59,5 @@ function barChart() {
         height = value;
         return chart;
         }
-
+    return chart;
     }
-}
