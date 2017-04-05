@@ -12,7 +12,7 @@ function barChart(){
         var div = selection,
             svg = div.selectAll('svg');
         svg .attr('width', width).attr('height', height)
-            .style('background', '#77c7a0')
+            .style('background', '#99c7a0')
 
         var tooltip = selection
             .append("div")
@@ -26,8 +26,10 @@ function barChart(){
             .style("font-family", "monospace")
             .style("width", "400px")
             .text("");
+
         var barwidth = width - margin.left - margin.right
         var barheight = height - margin.top - margin.bottom
+
         var colors = d3.scaleLinear()
             .domain([0, data.length * .33, data.length * .66, data.length])
             .range(['#96ceb4','#ffeead','#ff6f69','#ffcc5c'])
@@ -51,13 +53,46 @@ function barChart(){
                 return xScale(i);
             })
             .attr("y", function(d){
-                return barheight - yScale(d);
+                return barheight;
             })
             .attr("width", xScale.bandwidth()-3)
-            .attr("height", function(d){ return yScale(d)})
+            .attr("height", 0)
             .style("fill", function(d, i){ return colors(i);})
             .style("stroke", "#31708f")
             .style("stroke-width", "1")
+
+        bar.transition()
+        .attr("height", function(d){
+            return yScale(d);
+        })
+        .attr("y", function(d){
+            return barheight - yScale(d);
+        })
+        .delay(function(d, i){
+            return i * 20;
+        })
+        .duration(2000)
+        .ease(d3.easeElastic)
+
+        var xAxis = d3.axisBottom(xScale)
+                .ticks(data.size)
+        d3.select("svg").append("g")
+            .attr("id","xAxisG")
+            .call(xAxis)
+            .attr("transform",
+            "translate("+ margin.left + ", " + (height-margin.bottom) + ")")
+
+        var yAxisScale = d3.scaleLinear()
+            .domain([0, d3.max(data)])
+            .range([barheight, 0])
+        var yAxis = d3.axisLeft(yAxisScale)
+                .ticks(10)
+        d3.select("svg").append("g")
+            .attr("id","yAxisG")
+            .call(yAxis)
+            .attr("transform",
+                "translate("+ margin.left + ", " + margin.top + ")")
+
     }
 
     chart.width = function(value) {
