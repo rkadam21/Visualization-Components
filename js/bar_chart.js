@@ -12,7 +12,7 @@ function barChart(){
         var div = selection,
             svg = div.selectAll('svg');
         svg .attr('width', width).attr('height', height)
-            .style('background', '#bce8f1')
+            .style('background', '#77c7a0')
 
         var tooltip = selection
             .append("div")
@@ -30,7 +30,7 @@ function barChart(){
         var barheight = height - margin.top - margin.bottom
         var colors = d3.scaleLinear()
             .domain([0, data.length * .33, data.length * .66, data.length])
-            .range(['#d6e9c6', '#bcb5ff', '#faebcc', '#ebccd1'])
+            .range(['#96ceb4','#ffeead','#ff6f69','#ffcc5c'])
 
         var xScale = d3.scaleBand()
             .domain(d3.range(data.length))
@@ -53,7 +53,7 @@ function barChart(){
             .attr("y", function(d){
                 return barheight - yScale(d);
             })
-            .attr("width", xScale.bandwidth())
+            .attr("width", xScale.bandwidth()-3)
             .attr("height", function(d){ return yScale(d)})
             .style("fill", function(d, i){ return colors(i);})
             .style("stroke", "#31708f")
