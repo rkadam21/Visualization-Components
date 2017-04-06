@@ -87,7 +87,7 @@ function barChart(){
         .ease(d3.easeElastic)
 
         var xScaleAxis = d3.scaleBand()
-              .domain(data.map(function(el){return el.name;}))
+              .domain(data.map(function(el){return el[columnX];}))
               .range([0, chartWidth])
 
         var xAxis = d3.axisBottom(xScaleAxis)
@@ -134,7 +134,7 @@ function barChart(){
         if(!value){
             return alert('X-axis variable needs to be provided');
         }
-        var columnX = value;
+        columnX = value;
         return chart;
     }
 
@@ -142,7 +142,7 @@ function barChart(){
         if(!value){
             return alert('Y-axis variable needs to be provided');
         }
-        var columnY = value;
+        columnY = value;
         return chart;
     }
     return chart;
