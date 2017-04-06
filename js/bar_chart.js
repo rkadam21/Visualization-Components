@@ -7,8 +7,8 @@ function barChart(){
       bottom: 30,
       left: 50
     },
-    columnX = "name",
-    columnY = "value";
+    columnX = "",
+    columnY = "";
     function chart(selection) {
         var data = selection.enter().data();
         var div = selection,
@@ -129,5 +129,21 @@ function barChart(){
         height = value;
         return chart;
         }
-    return chart;
+
+    chart.columnX = function(value) {
+        if(!value){
+            return alert('X-axis variable needs to be provided');
+        }
+        var columnX = value;
+        return chart;
     }
+
+    chart.columnY = function(value) {
+        if(!value){
+            return alert('Y-axis variable needs to be provided');
+        }
+        var columnY = value;
+        return chart;
+    }
+    return chart;
+}
