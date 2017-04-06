@@ -8,10 +8,12 @@
 <div class="chart-example" id="chart"><svg></svg></div>
 <script>
 
-    var data =   [5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
-                    11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
+    //var data =  {obj:[{"name":"A", "value":15}, 10, 13, 19, 21, 25, 22, 18, 15, 13,
+    //                11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ]}
+    var data =  {"obj":[{"name":"B", "value":16}, {"name":"A", "value":15}, {"name":"C", "value":13}, {"name":"D", "value":19}]}
+    //var data =  {"obj":[{"name":"A", "value":15}]}
     var chart = barChart().width(720).height(400);
-    d3.select('#chart').data(data).call(chart);
+    d3.select('#chart').data(data.obj).call(chart);
 
 </script>
 </body>
