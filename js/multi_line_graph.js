@@ -43,6 +43,7 @@ function multiLine() {
             .x(function(d){return xScale(d[columnX]);})
             .y(function(d){return yScale(d[columnY1]);})
 
+
         //define valueline2
         var valueLine2 = d3.line()
             .x(function(d){return xScale(d[columnX]);})
@@ -73,7 +74,6 @@ function multiLine() {
             .attr("class","line")
             .attr("d", valueLine1)
 
-
         gLine .append("path")
             .data([data])
             .attr("class", "line")
@@ -92,20 +92,9 @@ function multiLine() {
                 return yScale(d[columnY1])
             })
             .style("fill","darkblue")
-            .on("mouseover", function(d){
-                tooltip.html("The "+ columnY1 + " count is: "
-                + d[columnY1] + "<br>" + " for the " + columnX + " of "+ d[columnX]);
-                return tooltip.style("visibility","visible");
-            })
-            .on("mousemove", function(){
-                return tooltip.style("top",
-                                (d3.event.pageY - 10) + "px")
-                            .style("left",
-                                (d3.event.pageX + 10) + "px");
-                })
-            .on("mouseout", function(d){
-                return tooltip.style("visibility","hidden");
-            });
+            .on("mouseover", focus)
+            .on("mousemove",onFocus)
+            .on("mouseout", defocus);
 
         gCircle2 .selectAll("circle")
             .data(data)
@@ -119,20 +108,10 @@ function multiLine() {
                 return yScale(d[columnY2])
             })
             .style("fill","darkred")
-            .on("mouseover", function(d){
-                tooltip.html("The "+ columnY2 + " count is: "
-                + d[columnY2] + "<br>" + " for the " + columnX + " of "+ d[columnX]);
-                return tooltip.style("visibility","visible");
-            })
-            .on("mousemove", function(){
-                return tooltip.style("top",
-                                (d3.event.pageY - 10) + "px")
-                            .style("left",
-                                (d3.event.pageX + 10) + "px");
-                })
-            .on("mouseout", function(d){
-                return tooltip.style("visibility","hidden");
-            });
+            .on("mouseover", focus)
+            .on("mousemove", onFocus)
+            .on("mouseout", defocus);
+
 
         var xAxis = d3.axisBottom(xScale)
             .ticks(30);
@@ -151,6 +130,26 @@ function multiLine() {
             .attr("transform",
                 "translate("+ margin.left + ", "
                 + (margin.top)+")");
+
+        function focus(e){
+            d3.select(this).transition()
+                .ease(d3.easeElastic)
+                .duration(500)
+                .attr("r",10);
+            tooltip .html("Here is tooltip")
+                    .style("visibility","visible");
+            };
+        function defocus(e){
+            d3  .select(this).transition()
+                .ease(d3.easeQuadOut)
+                .duration(500)
+                .attr("r",3);
+            tooltip .style("visibility","hidden");
+            };
+        function onFocus(e){
+            tooltip .style("top",(d3.event.pageY - 10) + "px")
+                    .style("left", (d3.event.pageX + 10) + "px");
+            };
     }
     chart.width = function(value) {
         if(!arguments.length){
