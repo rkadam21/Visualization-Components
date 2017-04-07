@@ -7,4 +7,10 @@
     border-radius: 6px;
     text-align: left;
     font-family: monospace;
+    width: 200px;
+}
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2px;
 }
