@@ -1,0 +1,7 @@
+ [{"name":"B", "value":16}, {"name":"A", "value":16},
+    {"name":"B", "value":15},
+    {"name":"C", "value":13}, {"name":"D", "value":19},
+    {"name":"E", "value": 24}, {"name":"F", "value":27},
+    {"name":"G", "value":16}, {"name":"H", "value":10},
+    {"name":"I", "value":13}, {"name":"J", "value":11},
+    {"name":"K", "value":30}, {"name":"L", "value":25}]
