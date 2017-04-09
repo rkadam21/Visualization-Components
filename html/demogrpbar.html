@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.6.0/d3.min.js"></script>
+    <script src="../js/grp_bar_chart.js"></script>
+    <link type="text/css" rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+<div class="chart-example" id="chart"><svg></svg></div>
+<script>
+
+var parseTime = d3.timeParse("%d-%b-%y");
+d3.csv("../data/grpbardata.csv", function (error, data) {
+        if (error) {
+            console.error('Error getting or parsing the data.');
+            throw error;
+        }
+        //format the data
+        data.forEach(function(d){
+            d.population = +d.population;
+        });
+        var data = d3.nest()
+            .key(function(d){return d.State;})
+            .entries(data);
+
+    var chart = grpBarChart().width(1300).height(400)
+                .columnX("Key")
+                .columnGrp("Category")
+                .columnY("Population")
+
+    d3.select('#chart').data(data).call(chart);
+});
+
+</script>
+</body>
