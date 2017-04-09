@@ -2,10 +2,10 @@ function grpBarChart(){
     var width = 720,
     height = 400,
     margin = {
-        top: 30,
+        top: 20,
         bottom: 30,
-        left: 50,
-        right: 10
+        left: 40,
+        right: 20
     }
     var columnX="",
     columnY="",
@@ -31,21 +31,23 @@ function grpBarChart(){
             .paddingInner(0.1);
 
         var grpAxis = d3.scaleBand()
-            .domain(["Under 5 Years", "5 to 13 Years", "14 to 17 Years", "18 to 24 Years", "25 to 44 Years", "45 to 64 Years","65 Years and Over"])
+            .domain(data.map(function(el) {return el.values.map(function(ele,i){return ele[columnGrp];})})[0])
             .rangeRound([0, xAxis.bandwidth()])
+            .padding(0.05)
 
         var yAxis = d3.scaleLinear()
-            .domain([0,10604510])
+            .domain([0,10604510]).nice()
             .rangeRound([chartHeight, 0]);
 
         var colorAxis = d3.scaleOrdinal()
-            .domain(["Under 5 Years", "5 to 13 Years", "14 to 17 Years", "18 to 24 Years", "25 to 44 Years", "45 to 64 Years","65 Years and Over"])
+            .domain(data.map(function(el) {return el.values.map(function(ele,i){return ele[columnGrp];})})[0])
             .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
         var overallG = svg .append("g")
             .attr("id", "overallG")
             .attr("width", chartWidth)
             .attr("height", chartHeight)
+            .attr("transform", "translate("+margin.left+", "+margin.top+")")
 
         var grpG = overallG .selectAll("g")
             .data(data)

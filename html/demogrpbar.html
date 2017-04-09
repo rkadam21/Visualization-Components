@@ -22,7 +22,7 @@ d3.csv("../data/grpbardata.csv", function (error, data) {
             .key(function(d){return d.State;})
             .entries(data);
 
-    var chart = grpBarChart().width(1300).height(400)
+    var chart = grpBarChart().width(960).height(500)
                 .columnX("Key")
                 .columnGrp("Category")
                 .columnY("Population")
