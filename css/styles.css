@@ -14,3 +14,11 @@
   stroke: steelblue;
   stroke-width: 2px;
 }
+.axis .domain {
+  display: none;
+}
+.legend {
+    font-family: sans-serif;
+    font-size: 10px;
+    text-anchor: end;
+}

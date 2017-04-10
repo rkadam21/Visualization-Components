@@ -38,7 +38,7 @@ function grpBarChart(){
             .padding(0.05)
 
         var yScale = d3.scaleLinear()
-            .domain([0, d3.max(domainList(data, columnY))])
+            .domain([0, d3.max(domainList(data, columnY))]).nice()
             .range([chartHeight, 0]);
 
         var colScale = d3.scaleOrdinal()
@@ -90,7 +90,52 @@ function grpBarChart(){
                 return i * 20;
             })
             .duration(2000)
-            .ease(d3.easeElastic)
+            .ease(d3.easeElastic);
+
+        overallG.append("g")
+                .attr("id","xAxisG")
+                .attr("transform",
+                    "translate(0, "+chartHeight+")")
+                .attr("class", "axis")
+                .call(d3.axisBottom(xScale));
+
+
+        overallG.append("g")
+                .attr("id","yAxisG")
+                .attr("class","axis")
+                .call(d3.axisLeft(yScale).ticks(null,"s"))
+            .append("text")
+            .attr("x", 2)
+            .attr("y", yScale(yScale.ticks().pop()) + 0.5)
+            .attr("dy", "0.32em")
+            .attr("fill", "#000")
+            .attr("font-weight", "bold")
+            .attr("text-anchor", "start")
+            .text("Population");
+
+        var legendG = overallG.append("g")
+            .attr("id","legendG")
+            .attr("class", "legend")
+
+        var legend = legendG.selectAll("g")
+            .data(grp.reverse())
+            .enter()
+            .append("g")
+            .attr("transform", function(d,i){
+                return "translate(0, "+i*20+")";
+                })
+
+        legend  .append("rect")
+            .attr("x",chartWidth - 19)
+            .attr("width", 19)
+            .attr("height", 19)
+            .attr("fill", colScale);
+
+        legend  .append("text")
+            .attr("x", chartWidth - 24)
+            .attr("y", 9.5)
+            .attr("dy", "0.32em")
+            .text(function(d){return d;});
 
         function domainList(d, column) {
             var map = d.map(v =>
