@@ -33,6 +33,7 @@ function barChart(){
         var xScale = d3.scaleBand()
             .domain(d3.range(data.length))
             .range([0, chartWidth])
+            .paddingInner(0.1)
 
         var yScale = d3.scaleLinear()
             .domain([0, d3.max(data, function(d){
@@ -53,7 +54,7 @@ function barChart(){
             .attr("y", function(d){
                 return chartHeight;
             })
-            .attr("width", xScale.bandwidth()-10)
+            .attr("width", xScale.bandwidth())
             .attr("height", 0)
             .style("fill", 'rgb(200,75,75)')
             .style("stroke", "#31708f")

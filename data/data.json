@@ -4,4 +4,7 @@
     {"name":"E", "value": 24}, {"name":"F", "value":27},
     {"name":"G", "value":16}, {"name":"H", "value":10},
     {"name":"I", "value":13}, {"name":"J", "value":11},
-    {"name":"K", "value":30}, {"name":"L", "value":25}]
+    {"name":"K", "value":30}, {"name":"L", "value":25},
+    {"name":"M", "value":24}, {"name":"N", "value":32},
+    {"name":"O", "value":45}, {"name":"P", "value":21},
+    {"name":"Q", "value":23}, {"name":"R", "value":25}]
