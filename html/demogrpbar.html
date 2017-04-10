@@ -16,7 +16,7 @@ d3.csv("../data/grpbardata.csv", function (error, data) {
         }
         //format the data
         data.forEach(function(d){
-            d.population = +d.population;
+            d.Population = +d.Population;
         });
         var data = d3.nest()
             .key(function(d){return d.State;})
