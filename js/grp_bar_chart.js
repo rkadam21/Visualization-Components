@@ -42,7 +42,9 @@ function grpBarChart(){
 
         var colScale = d3.scaleOrdinal()
             .domain(grp)
-            .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+            //.range(["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"])
+            .range(["#98abc5", "#8a89a6", "#7b6888",
+                    "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
         var overallG = svg .append("g")
             .attr("id", "overallG")
@@ -69,15 +71,25 @@ function grpBarChart(){
                 return grpScale(d[columnGrp]);
                 })
             .attr("y", function(d){
-                return yScale(d[columnY]);
+                return chartHeight;
                 })
             .attr("width", grpScale.bandwidth())
-            .attr("height", function(d,i){
-                return chartHeight - yScale(d[columnY]);
-                })
+            .attr("height", 0)
             .attr("fill", function(d,i) {
                 return colScale(d[columnGrp]);
                 });
+        bar .transition()
+            .attr("height", function(d){
+                return chartHeight - yScale(d[columnY]);
+            })
+            .attr("y", function(d){
+                return yScale(d[columnY]);
+            })
+            .delay(function(d,i){
+                return i * 20;
+            })
+            .duration(2000)
+            .ease(d3.easeElastic)
 
         function domainList(d, column) {
             var map = d.map(v =>
