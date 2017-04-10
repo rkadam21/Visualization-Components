@@ -9,12 +9,17 @@ function barChart(){
     },
     columnX = "",
     columnY = "";
+
     function chart(selection) {
         var data = selection.enter().data();
         var div = selection,
-            svg = div.selectAll("svg");
-        svg .attr("width", width).attr("height", height)
-            .style("background", "#99c7a0")
+            svg = div.selectAll("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .style("background", "#99c7a0")
+
+        var chartWidth = width - margin.left - margin.right
+        var chartHeight = height - margin.top - margin.bottom
 
         var tooltip = selection
             .append("div")
@@ -22,13 +27,6 @@ function barChart(){
             .style("width", "150px")
             .text("");
 
-        var chartWidth = width - margin.left - margin.right
-        var chartHeight = height - margin.top - margin.bottom
-        var barWidth = chartWidth / data.length
-
-        var colors = d3.scaleLinear()
-            .domain([0, data.length * .33, data.length * .66, data.length])
-            .range(["#96ceb4","#ffeead","#ff6f69","#ffcc5c"])
 
         var xScale = d3.scaleBand()
             .domain(d3.range(data.length))
@@ -39,7 +37,11 @@ function barChart(){
             .domain([0, d3.max(data, function(d){
                 return +d[columnY];
             })])
-            .range([0, chartHeight])
+            .range([chartHeight, 0]);
+
+        var colScale = d3.scaleLinear()
+            .domain([0, data.length * .33, data.length * .66, data.length])
+            .range(["#96ceb4","#ffeead","#ff6f69","#ffcc5c"])
 
         var bar = svg.append('g')
             .attr('transform',
@@ -76,10 +78,10 @@ function barChart(){
 
         bar.transition()
         .attr("height", function(d){
-            return yScale(d[columnY]);
+            return chartHeight - yScale(d[columnY]);
         })
         .attr("y", function(d){
-            return chartHeight - yScale(d[columnY]);
+            return yScale(d[columnY]);
         })
         .delay(function(d, i){
             return i * 20;
@@ -99,13 +101,7 @@ function barChart(){
             .attr("transform",
             "translate("+ margin.left + ", " + (height-margin.bottom) + ")")
 
-
-        var yAxisScale = d3.scaleLinear()
-            .domain([0, d3.max(data, function(d){
-                return +d[columnY];
-            })])
-            .range([chartHeight, 0])
-        var yAxis = d3.axisLeft(yAxisScale)
+        var yAxis = d3.axisLeft(yScale)
             .ticks(10)
         d3.select("svg").append("g")
             .attr("id","yAxisG")

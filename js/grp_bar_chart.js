@@ -14,17 +14,18 @@ function grpBarChart(){
     function chart(selection){
         var data = selection.enter().data();
         var div = selection,
-        svg = div.select("svg")
+        svg = div.selectAll("svg")
             .attr("width", width)
             .attr("height", height);
 
         var chartWidth = width - margin.left - margin.right,
         chartHeight = height - margin.top - margin.bottom;
 
+        var grp = domainList(data, columnGrp)
+
         var tooltip = svg.append("div")
                 .attr("class", "tooltip")
-                .attr("width", 100);
-        var grp = domainList(data, columnGrp)
+                .attr("width", "100px");
 
         var xScale = d3.scaleBand()
             .domain(data.map(function(el, i){ return el.key;}))
