@@ -132,7 +132,7 @@ function grpBarChart(){
             .attr("fill", "#000")
             .attr("font-weight", "bold")
             .attr("text-anchor", "start")
-            .text("Population");
+            .text(columnY);
 
         var legendG = overallG.append("g")
             .attr("id","legendG")
