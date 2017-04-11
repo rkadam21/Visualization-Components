@@ -16,16 +16,18 @@ function grpBarChart(){
         var div = selection,
         svg = div.selectAll("svg")
             .attr("width", width)
-            .attr("height", height);
+            .attr("height", height)
+            .style("background", "rgb(240,240,240)");
 
         var chartWidth = width - margin.left - margin.right,
         chartHeight = height - margin.top - margin.bottom;
 
         var grp = domainList(data, columnGrp)
 
-        var tooltip = svg.append("div")
+        var tooltip = selection.append("div")
                 .attr("class", "tooltip")
-                .attr("width", "100px");
+                .attr("width", "100px")
+                .text("");
 
         var xScale = d3.scaleBand()
             .domain(data.map(function(el, i){ return el.key;}))
@@ -58,7 +60,8 @@ function grpBarChart(){
             .data(data)
             .enter()
             .append("g")
-            .attr("id",function(d){return "grp_"+d.key;})
+            .attr("id","grpG")
+            .attr("name",function(d){return "g_"+d.key;})
             .attr("transform", function(d){
                 return "translate("+ xScale(d.key) + ", 0)";
             });
@@ -67,7 +70,8 @@ function grpBarChart(){
             .data(function(d){return d.values;})
             .enter()
             .append("rect")
-            .attr("id", function(d){return "bar"+ d[columnGrp];})
+            .attr("id","bar")
+            .attr("name", function(d){return "bar_"+ d[columnGrp];})
             .attr("x", function(d,i){
                 return grpScale(d[columnGrp]);
                 })
@@ -78,7 +82,24 @@ function grpBarChart(){
             .attr("height", 0)
             .attr("fill", function(d,i) {
                 return colScale(d[columnGrp]);
-                });
+                })
+            .on("mouseover", function(d){
+                tooltip.html("The Population for the state of "
+                + d[columnX] +" in the age band of "+d[columnGrp]+" is "
+                + d[columnY])
+                return tooltip.style("visibility", "visible");
+            })
+            .on("mousemove", function(){
+                return tooltip.style("top",
+                                (d3.event.pageY - 10) + "px")
+                            .style("left",
+                                (d3.event.pageX + 10)+ "px");
+
+            })
+            .on("mouseout", function(d){
+                return tooltip.style("visibility", "hidden");
+            });
+
         bar .transition()
             .attr("height", function(d){
                 return chartHeight - yScale(d[columnY]);
