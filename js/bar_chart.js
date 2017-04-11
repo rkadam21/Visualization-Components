@@ -2,10 +2,10 @@ function barChart(){
     var width = 720,
         height = 400,
     margin = {
-      top: 30,
-      right: 10,
+      top: 20,
+      right: 20,
       bottom: 30,
-      left: 50
+      left: 40
     },
     columnX = "",
     columnY = "";
@@ -29,29 +29,35 @@ function barChart(){
 
 
         var xScale = d3.scaleBand()
-            .domain(d3.range(data.length))
+            .domain(data.map(function(el){return el[columnX];}))
             .range([0, chartWidth])
             .paddingInner(0.1)
 
         var yScale = d3.scaleLinear()
             .domain([0, d3.max(data, function(d){
                 return +d[columnY];
-            })])
+            })]).nice()
             .range([chartHeight, 0]);
 
         var colScale = d3.scaleLinear()
             .domain([0, data.length * .33, data.length * .66, data.length])
             .range(["#96ceb4","#ffeead","#ff6f69","#ffcc5c"])
 
-        var bar = svg.append('g')
-            .attr('transform',
-                'translate(' + margin.left + ', ' + margin.top + ')')
-            .selectAll("rect")
+        var overallG = svg .append("g")
+                .attr("id", "overallG")
+                .attr("width", chartWidth)
+                .attr("height", chartHeight)
+                .attr("transform",
+                    "translate("+margin.left+", "+margin.top+")")
+
+        var bar = overallG.selectAll("rect")
             .data(data)
             .enter()
             .append("rect")
-            .attr("x", function(d, i){
-                return xScale(i);
+            .attr("id","bar")
+            .attr("name", function(d){return "bar_"+ d[columnX];})
+            .attr("x", function(d){
+                return xScale(d[columnX]);
             })
             .attr("y", function(d){
                 return chartHeight;
@@ -89,25 +95,15 @@ function barChart(){
         .duration(2000)
         .ease(d3.easeElastic)
 
-        var xScaleAxis = d3.scaleBand()
-              .domain(data.map(function(el){return el[columnX];}))
-              .range([0, chartWidth])
-
-        var xAxis = d3.axisBottom(xScaleAxis)
-            .ticks(data.size)
-        d3.select("svg").append("g")
+        overallG.append("g")
             .attr("id","xAxisG")
-            .call(xAxis)
+            .call(d3.axisBottom(xScale))
             .attr("transform",
-            "translate("+ margin.left + ", " + (height-margin.bottom) + ")")
+            "translate(0, " + chartHeight+ ")")
 
-        var yAxis = d3.axisLeft(yScale)
-            .ticks(10)
-        d3.select("svg").append("g")
+        overallG.append("g")
             .attr("id","yAxisG")
-            .call(yAxis)
-            .attr("transform",
-                "translate("+ margin.left + ", " + margin.top + ")")
+            .call(d3.axisLeft(yScale).ticks(10))
 
     }
 
