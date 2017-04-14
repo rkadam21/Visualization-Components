@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.6.0/d3.min.js"></script>
+    <script src="../js/boxplot.js"></script>
+    <link type="text/css" rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+<div class="chart-example" id="chart"><svg></svg></div>
+<script>
+
+var parseTime = d3.timeParse("%d-%b-%y");
+d3.csv("../data/boxplotdata.csv", function (d, columns, i){
+    for(var i = 1, n = columns.length; i < n; ++i)
+    d[column[i]] = +d[column[i]]
+    return d;
+},function (error, data) {
+        if (error) {
+            console.error('Error getting or parsing the data.');
+            throw error;
+        }
+
+    var chart = boxplot().width(960).height(500)
+                .columnX("day")
+                .columnY("number")
+
+    d3.select('#chart').data(data).call(chart);
+});
+
+</script>
+</body>
