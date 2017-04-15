@@ -10,7 +10,7 @@
 
 var parseTime = d3.timeParse("%d-%b-%y");
 d3.csv("../data/boxplotdata.csv", function (d, columns, i){
-    for(var i = 1, n = columns.length; i < n; ++i)
+    for(var i = 0, n = columns.length; i < n; ++i)
     d[column[i]] = +d[column[i]]
     return d;
 },function (error, data) {
@@ -19,9 +19,9 @@ d3.csv("../data/boxplotdata.csv", function (d, columns, i){
             throw error;
         }
 
-    var chart = boxplot().width(960).height(500)
+    var chart = boxplot().width(480).height(480)
                 .columnX("day")
-                .columnY("number")
+                .columnY("max")
 
     d3.select('#chart').data(data).call(chart);
 });
