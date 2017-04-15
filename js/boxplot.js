@@ -42,15 +42,6 @@ function boxplot(){
             .attr("transform",
             "translate("+ margin.left + ", "+ margin.top + ")");
 
-        var circles = overallG.selectAll("circle")
-            .data(data)
-            .enter()
-            .append("circle")
-            .attr("name", function(d){return "cir_"+d.day;})
-            .attr("r", 2)
-            .attr("cx", function(d, i){return xScale(d.day);})
-            .attr("cy", function(d){ return yScale(d.median);})
-
         var gBox = overallG.selectAll("g#gBox")
             .data(data)
             .enter()
@@ -64,13 +55,60 @@ function boxplot(){
                 + yScale(d.median) + ")";})
             .each(function(d, i){
                 d3.select(this)
+                .append("line")
+                .attr("name","rngLine_"+d.day)
+                .attr("id","rangeLine")
+                .attr("x1",0)
+                .attr("x2",0)
+                .attr("y1", yScale(d.max) - yScale(d.median))
+                .attr("y2", yScale(d.min) - yScale(d.median))
+                .style("stroke", "black")
+                .style("stroke-width", "4px")
+
+                d3.select(this)
                 .append("rect")
+                .attr("name","rect_"+d.day)
+                .attr("id","dist")
                 .attr("width", 20)
-                .attr("height", function(d){
-                    return yScale(d.q1) - yScale(d.q3);
-                })
-                .style("fill","none")
+                .attr("height", yScale(d.q1) - yScale(d.q3))
+                .attr("x", -10)
+                .attr("y", yScale(d.q3) - yScale(d.median))
+                .style("fill","rgb(240,240,240)")
                 .style("stroke","black")
+
+                d3.select(this)
+                .append("line")
+                .attr("name","mxmark_"+d.day)
+                .attr("id","maxmark")
+                .attr("x1", -10)
+                .attr("x2", 10)
+                .attr("y1", yScale(d.max) - yScale(d.median))
+                .attr("y2", yScale(d.max) - yScale(d.median))
+                .style("stroke", "black")
+                .style("stroke-width", "4px")
+
+                d3.select(this)
+                .append("line")
+                .attr("name","mnmark_"+d.day)
+                .attr("id","minmark")
+                .attr("x1", -10)
+                .attr("x2", 10)
+                .attr("y1", yScale(d.min) - yScale(d.median))
+                .attr("y2", yScale(d.min) - yScale(d.median))
+                .style("stroke", "black")
+                .style("stroke-width", "4px")
+
+                d3.select(this)
+                .append("line")
+                .attr("name","mdmark_"+d.day)
+                .attr("id","medmark")
+                .attr("x1", -10)
+                .attr("x2", 10)
+                .attr("y1", 0)
+                .attr("y2", 0)
+                .style("stroke", "grey")
+                .style("stroke-width", "4px")
+
 
             })
 
