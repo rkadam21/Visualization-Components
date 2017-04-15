@@ -112,6 +112,19 @@ function boxplot(){
 
             })
 
+
+        overallG.append("g")
+                .attr("id","xAxisG")
+                .attr("transform",
+                    "translate(0, "+ chartHeight +")")
+                .attr("class", "axis")
+                .call(d3.axisBottom(xScale));
+
+        overallG.append("g")
+                .attr("id","yAxisG")
+                .attr("class","axis")
+                .call(d3.axisLeft(yScale).ticks(null,"s"))
+
     }
 
     chart.width = function(value) {
