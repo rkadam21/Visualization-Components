@@ -10,7 +10,7 @@
 
 var parseTime = d3.timeParse("%d-%b-%y");
 d3.csv("../data/boxplotdata.csv", function (d, columns, i){
-    for(var i = 0, n = columns.length; i < n; ++i)
+    for(var i = 1, n = columns.length; i < n; ++i)
     d[column[i]] = +d[column[i]]
     return d;
 },function (error, data) {

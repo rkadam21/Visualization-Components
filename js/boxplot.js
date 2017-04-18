@@ -28,7 +28,8 @@ function boxplot(){
 
         var xScale = d3.scaleBand()
             .domain(data.map(function(d){return d[columnX];}))
-            .range([0, chartWidth]);
+            .range([0, chartWidth])
+            .padding(1.0);
 
         var yScale = d3.scaleLinear()
             .domain([0, d3.max(data,
@@ -48,15 +49,15 @@ function boxplot(){
             .append("g")
             .attr("id","gBox")
             .attr("name", function(d){
-                return"g_" + d.day;
+                return"g_" + d[columnX];
             })
             .attr("transform", function(d){
-                return "translate(" + xScale(d.day) + ", "
+                return "translate(" + xScale(d[columnX]) + ", "
                 + yScale(d.median) + ")";})
             .each(function(d, i){
                 d3.select(this)
                 .append("line")
-                .attr("name","rngLine_"+d.day)
+                .attr("name","rngLine_"+d[columnX])
                 .attr("id","rangeLine")
                 .attr("x1",0)
                 .attr("x2",0)
@@ -67,7 +68,7 @@ function boxplot(){
 
                 d3.select(this)
                 .append("rect")
-                .attr("name","rect_"+d.day)
+                .attr("name","rect_"+ d[columnX])
                 .attr("id","dist")
                 .attr("width", 20)
                 .attr("height", yScale(d.q1) - yScale(d.q3))
@@ -78,7 +79,7 @@ function boxplot(){
 
                 d3.select(this)
                 .append("line")
-                .attr("name","mxmark_"+d.day)
+                .attr("name","mxmark_"+d[columnX])
                 .attr("id","maxmark")
                 .attr("x1", -10)
                 .attr("x2", 10)
@@ -89,7 +90,7 @@ function boxplot(){
 
                 d3.select(this)
                 .append("line")
-                .attr("name","mnmark_"+d.day)
+                .attr("name","mnmark_"+d[columnX])
                 .attr("id","minmark")
                 .attr("x1", -10)
                 .attr("x2", 10)
@@ -100,7 +101,7 @@ function boxplot(){
 
                 d3.select(this)
                 .append("line")
-                .attr("name","mdmark_"+d.day)
+                .attr("name","mdmark_"+d[columnX])
                 .attr("id","medmark")
                 .attr("x1", -10)
                 .attr("x2", 10)
@@ -119,10 +120,17 @@ function boxplot(){
                     "translate(0, "+ chartHeight +")")
                 .attr("class", "axis")
                 .call(d3.axisBottom(xScale));
+        overallG.select("g#xAxisG")
+            .selectAll("g.tick")
+            .selectAll("line")
+            .attr("y2", -chartHeight)
+            .attr("stroke", "lightgrey")
 
         overallG.append("g")
                 .attr("id","yAxisG")
                 .attr("class","axis")
+                .attr("transform",
+                    "translate(0,0)")
                 .call(d3.axisLeft(yScale).ticks(null,"s"))
 
     }
