@@ -43,6 +43,30 @@ function boxplot(){
             .attr("transform",
             "translate("+ margin.left + ", "+ margin.top + ")");
 
+        overallG.append("g")
+            .attr("id","xAxisG")
+            .attr("transform",
+                "translate(0, "+ chartHeight +")")
+            .attr("class", "axis")
+            .call(d3.axisBottom(xScale).tickSize(-chartHeight));
+
+        overallG.select("g#xAxisG")
+            .selectAll("g.tick")
+            .selectAll("line")
+            .attr("stroke", "lightgrey")
+
+        overallG.append("g")
+            .attr("id","yAxisG")
+            .attr("class","axis")
+            .attr("transform",
+                "translate(0,0)")
+            .call(d3.axisLeft(yScale).tickSize(-chartWidth))
+
+        overallG.select("g#yAxisG")
+            .selectAll("g.tick")
+            .selectAll("line")
+            .attr("stroke", "lightgrey")
+
         var gBox = overallG.selectAll("g#gBox")
             .data(data)
             .enter()
@@ -64,15 +88,15 @@ function boxplot(){
                 .attr("y1", yScale(d.max) - yScale(d.median))
                 .attr("y2", yScale(d.min) - yScale(d.median))
                 .style("stroke", "black")
-                .style("stroke-width", "4px")
+                .style("stroke-width", "3px")
 
                 d3.select(this)
                 .append("rect")
                 .attr("name","rect_"+ d[columnX])
                 .attr("id","dist")
-                .attr("width", 20)
+                .attr("width", 14)
                 .attr("height", yScale(d.q1) - yScale(d.q3))
-                .attr("x", -10)
+                .attr("x", -7)
                 .attr("y", yScale(d.q3) - yScale(d.median))
                 .style("fill","rgb(240,240,240)")
                 .style("stroke","black")
@@ -81,57 +105,37 @@ function boxplot(){
                 .append("line")
                 .attr("name","mxmark_"+d[columnX])
                 .attr("id","maxmark")
-                .attr("x1", -10)
-                .attr("x2", 10)
+                .attr("x1", -7)
+                .attr("x2", 7)
                 .attr("y1", yScale(d.max) - yScale(d.median))
                 .attr("y2", yScale(d.max) - yScale(d.median))
                 .style("stroke", "black")
-                .style("stroke-width", "4px")
+                .style("stroke-width", "3px")
 
                 d3.select(this)
                 .append("line")
                 .attr("name","mnmark_"+d[columnX])
                 .attr("id","minmark")
-                .attr("x1", -10)
-                .attr("x2", 10)
+                .attr("x1", -7)
+                .attr("x2", 7)
                 .attr("y1", yScale(d.min) - yScale(d.median))
                 .attr("y2", yScale(d.min) - yScale(d.median))
                 .style("stroke", "black")
-                .style("stroke-width", "4px")
+                .style("stroke-width", "3px")
 
                 d3.select(this)
                 .append("line")
                 .attr("name","mdmark_"+d[columnX])
                 .attr("id","medmark")
-                .attr("x1", -10)
-                .attr("x2", 10)
+                .attr("x1", -7)
+                .attr("x2", 7)
                 .attr("y1", 0)
                 .attr("y2", 0)
                 .style("stroke", "grey")
-                .style("stroke-width", "4px")
+                .style("stroke-width", "3px")
 
 
-            })
-
-
-        overallG.append("g")
-                .attr("id","xAxisG")
-                .attr("transform",
-                    "translate(0, "+ chartHeight +")")
-                .attr("class", "axis")
-                .call(d3.axisBottom(xScale));
-        overallG.select("g#xAxisG")
-            .selectAll("g.tick")
-            .selectAll("line")
-            .attr("y2", -chartHeight)
-            .attr("stroke", "lightgrey")
-
-        overallG.append("g")
-                .attr("id","yAxisG")
-                .attr("class","axis")
-                .attr("transform",
-                    "translate(0,0)")
-                .call(d3.axisLeft(yScale).ticks(null,"s"))
+            });
 
     }
 

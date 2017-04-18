@@ -13,13 +13,13 @@ d3.csv("../data/boxplotdata.csv", function (d, columns, i){
     for(var i = 1, n = columns.length; i < n; ++i)
     d[column[i]] = +d[column[i]]
     return d;
-},function (error, data) {
+}, function (error, data) {
         if (error) {
             console.error('Error getting or parsing the data.');
             throw error;
         }
 
-    var chart = boxplot().width(720).height(500)
+    var chart = boxplot().width(960).height(500)
                 .columnX("day")
                 .columnY("max")
 
