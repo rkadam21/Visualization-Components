@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.6.0/d3.min.js"></script>
+    <script src="../js/pie_radial_chart.js"></script>
+    <link type="text/css" rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+<div class="chart-example" id="chart"><svg></svg></div>
+<script>
+var data = [10,10,20,40,30]
+var chart = piradial()
+d3.select("#chart").data(data).call(chart)
+
+</script>
+</body>
