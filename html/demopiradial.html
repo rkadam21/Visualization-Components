@@ -8,7 +8,7 @@
 <div class="chart-example" id="chart"><svg></svg></div>
 <script>
 var data = [10,10,20,40,30]
-var chart = piradial()
+var chart = piradial().width(500).height(500)
 d3.select("#chart").data(data).call(chart)
 
 </script>
