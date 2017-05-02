@@ -22,10 +22,10 @@ function piradial(){
 
         var chartWidth = width - margin.left - margin.right,
         chartHeight = height - margin.top - margin.bottom,
-        radius = Math.min(chartWidth, chartHeight) / 2;
+        radius = Math.min(chartWidth, chartHeight) / 2,
+        tau = 2 * Math.PI;
 
         var colScale = d3.scaleOrdinal(d3.schemeCategory10);
-        var colScale1 = d3.scaleOrdinal(d3.schemeCategory20b);
 
         var arc = d3.arc()
             .outerRadius(radius-120)
@@ -58,20 +58,22 @@ function piradial(){
         var arcRad = d3.arc()
             .outerRadius(radius - 90)
             .innerRadius(radius - 115)
-            .startAngle(Math.PI)
+            .startAngle(tau/2)
             .cornerRadius(12)
 
         var background = overAllG.append("g")
             .append("path")
-            .datum({endAngle:3*Math.PI})
+            .attr("class","category2 arc")
+            .datum({endAngle:tau/2 + tau})
             .attr("d", arcRad)
-            .style("fill","#ccc")
+
 
         var foreground = overAllG.append("g")
             .append("path")
-            .datum({endAngle: Math.PI + 0.75 * 2*Math.PI})
+            .attr("class","category1 arc")
+            .datum({endAngle: tau/2 + 0.66 * tau})
             .attr("d", arcRad)
-            .style("fill","lightblue")
+
 
     }
 

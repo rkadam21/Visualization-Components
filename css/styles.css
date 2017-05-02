@@ -22,3 +22,9 @@
     font-size: 10px;
     text-anchor: end;
 }
+.arc.category2 {
+    fill: #ccc;
+}
+.arc.category1 {
+    fill: steelblue;
+}
