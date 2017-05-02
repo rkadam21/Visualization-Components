@@ -55,30 +55,23 @@ function piradial(){
             .style("fill", function(d){return colScale(d.data);});
 
 
-        var arcOut = d3.arc()
+        var arcRad = d3.arc()
             .outerRadius(radius - 90)
             .innerRadius(radius - 115)
+            .startAngle(Math.PI)
+            .cornerRadius(12)
 
-        var pieOut = d3.pie()
-            .sort(null)
-            .value(function(d) {return d;})
+        var background = overAllG.append("g")
+            .append("path")
+            .datum({endAngle:3*Math.PI})
+            .attr("d", arcRad)
+            .style("fill","#ccc")
 
-        var overAllGOut = svg.append("g")
-            .attr("name", "overAllGOut")
-            .attr("transform", "translate("+
-                chartWidth / 2 + ", "+ chartHeight / 2 + ")");
-
-        var pieGOut = overAllGOut.selectAll(".arc")
-            .data(pie(data))
-            .enter()
-            .append("g")
-            .attr("class","arc")
-
-        pieGOut.append("path")
-            .attr("d", arcOut)
-            .style("fill", function(d){return colScale1(d.data);});
-
-
+        var foreground = overAllG.append("g")
+            .append("path")
+            .datum({endAngle: Math.PI + 0.75 * 2*Math.PI})
+            .attr("d", arcRad)
+            .style("fill","lightblue")
 
     }
 
