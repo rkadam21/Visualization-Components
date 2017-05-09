@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.8.0/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.6.0/d3.min.js"></script>
     <script src="../js/pie_radial_chart.js"></script>
     <link type="text/css" rel="stylesheet" href="../css/styles.css" />
 </head>
 <body>
 <div class="chart-example" id="chart"><svg></svg></div>
 <script>
-var data = [10,10,20,40,30]
-var chart = piradial().width(500).height(500)
-d3.select("#chart").data(data).call(chart)
+
+d3.json("../data/piradialdata.json", function(error, data){
+    if(error) {
+        console.error("Error getting or parsing data...");
+        throw error;
+    }
+    var chart = piradial().width(500).height(500)
+        .piefield("value")
+        .radialfieldval("category", "x")
+    d3.select("#chart").data(data).call(chart)
+});
 
 </script>
 </body>

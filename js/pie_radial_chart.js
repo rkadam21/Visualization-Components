@@ -6,7 +6,10 @@ function piradial(){
         left: 10,
         right:10,
         bottom:10
-    }
+    };
+    var val="",
+    cat="",
+    catVal="";
     function chart(selection){
         var data = selection.enter().data();
         var div = selection,
@@ -25,6 +28,10 @@ function piradial(){
         radius = Math.min(chartWidth, chartHeight) / 2,
         tau = 2 * Math.PI;
 
+        var catArr = data.map(function(el){return el[cat];});
+        var categoryVal = (catArr.filter(function(el){
+            return el==catVal;}).length)/catArr.length;
+
         var colScale = d3.scaleOrdinal(d3.schemeCategory10);
 
         var arc = d3.arc()
@@ -37,7 +44,7 @@ function piradial(){
 
         var pie = d3.pie()
             .sort(null)
-            .value(function(d){return d;});
+            .value(function(d){return d[val];})
 
         var overAllG = svg.append("g")
             .attr("name", "overAllG")
@@ -52,7 +59,7 @@ function piradial(){
 
         pieG.append("path")
             .attr("d", arc)
-            .style("fill", function(d){return colScale(d.data);});
+            .style("fill", function(d){return colScale(d.data[val]);});
 
 
         var arcRad = d3.arc()
@@ -71,7 +78,7 @@ function piradial(){
         var foreground = overAllG.append("g")
             .append("path")
             .attr("class","category1 arc")
-            .datum({endAngle: tau/2 + 0.66 * tau})
+            .datum({endAngle: tau/2 + categoryVal * tau})
             .attr("d", arcRad)
 
 
@@ -91,6 +98,21 @@ function piradial(){
         height = value;
         return chart;
         }
-        
+    chart.piefield = function(value) {
+        if(!arguments.length){
+            return alert("A value function needs to be provided");
+        }
+        val = value
+        return chart;
+    }
+    chart.radialfieldval = function(cate, cateVal){
+        if(!arguments.length){
+            return alert("A category field needs to be provided!")
+        }
+        cat = cate
+        catVal = cateVal
+        return chart;
+    }
+
     return chart;
 }

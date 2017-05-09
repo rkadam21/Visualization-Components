@@ -1,0 +1,5 @@
+[{"name":"B", "value":10, "category":"x"},
+    {"name":"A", "value":10, "category":"x"},
+    {"name":"B", "value":20,"category":"x"},
+    {"name":"C", "value":30,"category":"y"},
+    {"name":"D", "value":40,"category":"y"}]
