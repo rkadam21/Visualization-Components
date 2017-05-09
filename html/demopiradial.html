@@ -13,6 +13,15 @@ d3.json("../data/piradialdata.json", function(error, data){
         console.error("Error getting or parsing data...");
         throw error;
     }
+    var typData = [...new Set(data.map(function(el){return el.type;}))]
+    d3.select("#chart").selectAll("input")
+        .data(typData)
+        .enter()
+        .append("input")
+        .attr("type","radio")
+        .attr("value",function(d){return d;})
+        .text(function(d){return d;})
+
     var chart = piradial().width(500).height(500)
         .piefield("value")
         .radialfieldval("category", "x")

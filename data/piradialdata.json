@@ -1,5 +1,9 @@
-[{"name":"B", "value":10, "category":"x"},
-    {"name":"A", "value":10, "category":"x"},
-    {"name":"B", "value":20,"category":"x"},
-    {"name":"C", "value":30,"category":"y"},
-    {"name":"D", "value":40,"category":"y"}]
+[{"name":"B", "value":10, "category":"x", "type": "USD"},
+    {"name":"A", "value":10, "category":"x","type": "USD"},
+    {"name":"B", "value":20,"category":"x","type": "USD"},
+    {"name":"C", "value":30,"category":"y","type": "USD"},
+    {"name":"D", "value":40,"category":"y","type": "USD"},
+    {"name":"A", "value":20, "category":"x", "type": "GBP"},
+    {"name":"B", "value":30,"category":"y","type": "GBP"},
+    {"name":"C", "value":10,"category":"y","type": "GBP"},
+    {"name":"D", "value":40,"category":"y","type": "GBP"}]
